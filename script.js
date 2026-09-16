@@ -89,7 +89,49 @@ async function searchPlant(name) {
         // 1. TAXONOMIC MATCH
         // =================================================
 
-        const matchResponse =
+       // =================================================
+// 1. TAXONOMIC MATCH
+// =================================================
+
+const matchResponse =
+    await fetch(
+       `${API}/v2/species/match?name=${encodeURIComponent(name)}`
+    );
+
+if (!matchResponse.ok) {
+
+    throw new Error(
+        "GBIF taxonomy service is unavailable."
+    );
+
+}
+
+const match =
+    await matchResponse.json();
+
+if (!match.usageKey) {
+
+    throw new Error(
+        "Plant could not be found. Try its scientific name or another common name."
+    );
+
+}
+
+// Only continue if it is a plant
+if (
+    match.kingdom &&
+    match.kingdom.toLowerCase() !== "plantae"
+) {
+
+    throw new Error(
+        "The searched name does not match a plant taxon."
+    );
+
+}
+
+const taxonKey =
+    match.usageKey;
+     const matchResponse =
             await fetch(
                 `${API}/v2/species/match?name=${encodeURIComponent(name)}`
             );
