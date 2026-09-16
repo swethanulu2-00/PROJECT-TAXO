@@ -93,9 +93,7 @@ async function searchPlant(name) {
 // 1. TAXONOMIC MATCH
 // =================================================
 
-const matchResponse =
-  
-            await fetch(
+const matchResponse = await fetch(
                 `${API}/v2/species/match?name=${encodeURIComponent(name)}`
             );
 
