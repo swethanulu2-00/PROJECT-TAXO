@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="TaxoFlora - Global Botanical Taxonomy and Biodiversity Explorer">
+
+    <title>TaxoFlora | Global Botanical Explorer</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+</head>
+
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="brand">
+        <div class="brand-icon">🌿</div>
+
+        <div>
+            <h2>TaxoFlora</h2>
+            <small>GLOBAL BOTANICAL INTELLIGENCE</small>
+        </div>
+    </div>
+
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#explore">Explore</a>
+        <a href="#mapSection">Global Map</a>
+        <a href="#about">About</a>
+    </nav>
+
+</header>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            🌍 GLOBAL PLANT DATABASE
+        </div>
+
+        <h1>
+            Discover
+            <span>Every Plant</span>
+            Around the World
+        </h1>
+
+        <p>
+            Search botanical species and explore taxonomy,
+            scientific information, images, conservation,
+            geographic distribution and real-world GPS
+            observations.
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <form id="searchForm"
+              class="search-form">
+
+            <input
+                id="plantInput"
+                type="text"
+                placeholder="Enter plant name — Mango, Neem, Rosa, Azadirachta..."
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit">
+                🔎 Search
+            </button>
+
+        </form>
+
+
+        <div class="quick-search">
+
+            <span>Popular:</span>
+
+            <button onclick="quickSearch('Mango')">
+                Mango
+            </button>
+
+            <button onclick="quickSearch('Neem')">
+                Neem
+            </button>
+
+            <button onclick="quickSearch('Rose')">
+                Rose
+            </button>
+
+            <button onclick="quickSearch('Tulip')">
+                Tulip
+            </button>
+
+            <button onclick="quickSearch('Sandalwood')">
+                Sandalwood
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= STATUS ================= -->
+
+<section id="statusSection"
+         class="status hidden">
+
+    <div class="loader"></div>
+
+    <p id="statusText">
+        Searching global biodiversity database...
+    </p>
+
+</section>
+
+
+
+<!-- ================= ERROR ================= -->
+
+<div id="errorBox"
+     class="error-box hidden">
+</div>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main id="explore"
+      class="main hidden">
+
+
+    <!-- ================= PLANT HEADER ================= -->
+
+    <section class="plant-header">
+
+        <div>
+
+            <span class="eyebrow">
+                PLANT SPECIES
+            </span>
+
+            <h1 id="scientificName">
+                -
+            </h1>
+
+            <p id="taxonInfo">
+                -
+            </p>
+
+        </div>
+
+
+        <div class="status-badge"
+             id="taxonomicStatus">
+            -
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= OVERVIEW ================= -->
+
+    <section class="overview-grid">
+
+
+        <!-- IMAGE -->
+
+        <div class="plant-image-card">
+
+            <img
+                id="plantImage"
+                alt="Plant"
+            >
+
+            <div id="imageFallback"
+                 class="image-fallback hidden">
+
+                🌿
+
+                <p>
+                    Image not available
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- INFORMATION -->
+
+        <div class="information-card">
+
+            <h2>
+                Plant Information
+            </h2>
+
+
+            <div class="chips">
+
+                <span id="rankChip">
+                    Rank
+                </span>
+
+                <span id="familyChip">
+                    Family
+                </span>
+
+                <span id="iucnChip">
+                    IUCN
+                </span>
+
+            </div>
+
+
+            <h3>
+                Common / Vernacular Names
+            </h3>
+
+            <div id="commonNames"
+                 class="tag-list">
+            </div>
+
+
+            <h3>
+                Botanical Description
+            </h3>
+
+            <p id="description">
+                -
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CLASSIFICATION ================= -->
+
+    <section class="content-section">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">
+                TAXONOMY
+            </span>
+
+            <h2>
+                Scientific Classification
+            </h2>
+
+        </div>
+
+
+        <div class="classification-grid">
+
+            <div class="taxon-card">
+                <small>Kingdom</small>
+                <strong id="kingdom">-</strong>
+            </div>
+
+            <div class="taxon-card">
+                <small>Phylum</small>
+                <strong id="phylum">-</strong>
+            </div>
+
+            <div class="taxon-card">
+                <small>Class</small>
+                <strong id="className">-</strong>
+            </div>
+
+            <div class="taxon-card">
+                <small>Order</small>
+                <strong id="order">-</strong>
+            </div>
+
+            <div class="taxon-card">
+                <small>Family</small>
+                <strong id="family">-</strong>
+            </div>
+
+            <div class="taxon-card">
+                <small>Genus</small>
+                <strong id="genus">-</strong>
+            </div>
+
+            <div class="taxon-card">
+                <small>Species</small>
+                <strong id="species">-</strong>
+            </div>
+
+            <div class="taxon-card">
+                <small>Authorship</small>
+                <strong id="authorship">-</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= TAXON DETAILS ================= -->
+
+    <section class="content-section">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">
+                TAXONOMIC DETAILS
+            </span>
+
+            <h2>
+                Additional Information
+            </h2>
+
+        </div>
+
+
+        <div class="details-grid">
+
+            <div class="detail-box">
+
+                <small>
+                    Scientific Name
+                </small>
+
+                <strong id="scientificNameDetail">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <small>
+                    Canonical Name
+                </small>
+
+                <strong id="canonicalName">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <small>
+                    GBIF Taxon Key
+                </small>
+
+                <strong id="gbifKey">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <small>
+                    Taxonomic Status
+                </small>
+
+                <strong id="statusDetail">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= SYNONYMS ================= -->
+
+    <section class="content-section">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">
+                NOMENCLATURE
+            </span>
+
+            <h2>
+                Synonyms & Related Names
+            </h2>
+
+        </div>
+
+
+        <div id="synonyms"
+             class="synonym-list">
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CONSERVATION ================= -->
+
+    <section class="conservation">
+
+        <div>
+
+            <span class="eyebrow">
+                CONSERVATION
+            </span>
+
+            <h2>
+                Conservation Status
+            </h2>
+
+            <p>
+                IUCN category when available through
+                the biodiversity data source.
+            </p>
+
+        </div>
+
+
+        <div class="iucn-large"
+             id="iucnLarge">
+            Not available
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= DISTRIBUTION ================= -->
+
+    <section class="content-section">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">
+                DISTRIBUTION
+            </span>
+
+            <h2>
+                Global Distribution
+            </h2>
+
+        </div>
+
+
+        <div id="distribution"
+             class="distribution-list">
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= MAP ================= -->
+
+    <section class="content-section"
+             id="mapSection">
+
+        <div class="map-header">
+
+            <div>
+
+                <span class="eyebrow">
+                    GEOGRAPHIC OBSERVATIONS
+                </span>
+
+                <h2>
+                    Worldwide GPS Map
+                </h2>
+
+                <p>
+                    Showing available georeferenced
+                    observations for this taxon.
+                </p>
+
+            </div>
+
+
+            <div class="record-stat">
+
+                <strong id="recordCount">
+                    0
+                </strong>
+
+                <span>
+                    observations
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div id="map"></div>
+
+    </section>
+
+
+
+    <!-- ================= GPS TABLE ================= -->
+
+    <section class="content-section">
+
+        <div class="section-heading">
+
+            <span class="eyebrow">
+                LOCATION DATA
+            </span>
+
+            <h2>
+                GPS Observation Records
+            </h2>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Country</th>
+                        <th>Location</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Date</th>
+                        <th>Source</th>
+                        <th>Map</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="gpsTable">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= DATA NOTE ================= -->
+
+    <section class="data-note">
+
+        <strong>
+            Data availability
+        </strong>
+
+        <p>
+            TaxoFlora displays information available
+            from the connected biodiversity datasets.
+            Not every species has every field, image,
+            conservation category or GPS observation.
+        </p>
+
+    </section>
+
+</main>
+
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about"
+         class="about">
+
+    <span class="eyebrow">
+        ABOUT TAXOFLORA
+    </span>
+
+    <h2>
+        Digitizing Botanical Taxonomy
+        <br>
+        for a Sustainable Future
+    </h2>
+
+    <p>
+        TaxoFlora brings botanical taxonomy,
+        biodiversity observations, geographic data
+        and conservation information together in
+        one accessible platform.
+    </p>
+
+
+    <div class="about-grid">
+
+        <div>
+            <span>🌱</span>
+            <h3>Plant Discovery</h3>
+            <p>
+                Search scientific and common plant names.
+            </p>
+        </div>
+
+
+        <div>
+            <span>🧬</span>
+            <h3>Taxonomy</h3>
+            <p>
+                Explore scientific classification.
+            </p>
+        </div>
+
+
+        <div>
+            <span>📍</span>
+            <h3>GPS Data</h3>
+            <p>
+                Explore available worldwide observations.
+            </p>
+        </div>
+
+
+        <div>
+            <span>🌍</span>
+            <h3>Global Biodiversity</h3>
+            <p>
+                Access data from biodiversity records
+                around the world.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-brand">
+        🌿 TaxoFlora
+    </div>
+
+    <p>
+        Global Botanical Intelligence Platform
+    </p>
+
+    <p>
+        Biodiversity data powered by GBIF
+    </p>
+
+</footer>
+
+
+
+<!-- LEAFLET -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
+<!-- TAXOFLORA JS -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
