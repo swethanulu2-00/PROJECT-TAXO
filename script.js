@@ -95,7 +95,7 @@ async function searchPlant(name) {
 
 const matchResponse =
     await fetch(
-        `${API}/v1/species/match?name=${encodeURIComponent(name)}`
+       `${API}/v2/species/match?name=${encodeURIComponent(name)}`
     );
 
 if (!matchResponse.ok) {
